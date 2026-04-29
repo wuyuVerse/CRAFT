@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Local configuration and secrets
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+# Generated outputs
+output/
+outputs/
+logs/
+eval_results/
+checkpoints/
+runs/
+wandb/
+
+# Models and large data
+models/
+hf_cache/
+sft/models/
+sft/logs/
+sft/data/.cache/
+sft/data/**/*.jsonl
+sft/data/**/*.arrow
+
+# Paper/build artifacts
+paper/
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,33 @@
+# tau2-bench evaluation config.
+
+task_name: "craft_eval_example"
+
+agent:
+  base_url: "${OPENAI_BASE_URL:-http://localhost:8000/v1}"
+  model_id: "${OPENAI_MODEL:-your-agent-model}"
+  max_tokens: 4096
+
+user:
+  base_url: "${OPENAI_BASE_URL:-http://localhost:8000/v1}"
+  model_id: "${OPENAI_USER_MODEL:-your-user-simulator-model}"
+  max_tokens: 4096
+
+domains:
+  - airline
+  - retail
+  - telecom
+
+num_trials: 1
+num_runs: 1
+max_concurrency: 8
+eval_batch_size: 3
+num_tasks: 5
+
+synthetic_testset_dir: "src/eval/synthetic_testset"
+compute_extended_metrics: true
+
+also_test_native: false
+native_num_runs: 1
+synthetic_num_runs: 1
+
+output_dir: "eval_results"

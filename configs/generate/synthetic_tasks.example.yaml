@@ -1,0 +1,34 @@
+# Multi-agent synthetic tau2 task generation.
+
+llm:
+  api_pool:
+    - api_key: "${OPENAI_API_KEY:-EMPTY}"
+      base_url: "${OPENAI_BASE_URL:-http://localhost:8000/v1}"
+      model: "your-model-name"
+
+generation:
+  num_tasks_per_domain:
+    airline: 10
+    retail: 10
+    telecom: 10
+  complexity_weights:
+    simple: 0.3
+    medium: 0.5
+    complex: 0.2
+  max_concurrent: 4
+
+agents:
+  task_designer:
+    temperature: 0.7
+  scenario_writer:
+    temperature: 0.8
+  criteria_writer:
+    temperature: 0.6
+
+quality:
+  min_reason_length: 30
+  min_task_instructions_length: 50
+  require_all_actions: true
+
+output:
+  dir: "output/synthetic_tasks"

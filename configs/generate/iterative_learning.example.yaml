@@ -1,0 +1,74 @@
+# Iterative recovery-data generation on tau2-bench tasks.
+
+domains:
+  - airline
+  - retail
+  - telecom
+
+llm:
+  agent: "openai/your-agent-model"
+  user: "openai/your-user-simulator-model"
+  analysis: "openai/your-analysis-model"
+  api_base: "${OPENAI_BASE_URL:-http://localhost:8000/v1}"
+  args:
+    api_key: "${OPENAI_API_KEY:-EMPTY}"
+
+task:
+  max_attempts: 3
+  max_steps: 100
+  num_trials: 1
+  num_trials_per_domain:
+    airline: 2
+    retail: 2
+    telecom: 2
+  task_ids: null
+  # Optional: directory containing {domain}/synthetic_tasks_{domain}.json.
+  tasks_path: null
+
+concurrency:
+  max_concurrency: 4
+  analysis_concurrency: 2
+
+enhancement:
+  enable_cot: true
+  quality_threshold: 0.7
+  prioritize_weak: true
+  enable_contrast_feedback: true
+  enable_quality_validation: true
+  validation_rules:
+    max_conversation_turns: 80
+    max_tool_calls: 25
+    check_repetitive_actions: true
+    max_same_action_repeat: 3
+    require_successful_recovery: true
+    strict_database_check: true
+    check_action_completeness: true
+
+error_injection:
+  enabled: true
+  mode: "agent"
+  base_rate: 0.6
+  max_errors_per_task: 5
+  correct_trajectory_weight: 2
+  save_analysis_data: true
+  error_db_path: "eval_results/error_database.json"
+  agent:
+    use_llm_for_recovery: true
+    error_types:
+      - parameter_error
+      - business_logic_error
+      - state_error
+    error_type_weights:
+      parameter_error: 0.35
+      business_logic_error: 0.40
+      state_error: 0.25
+      tool_hallucination: 0.0
+
+prompt_enhancement:
+  enabled: true
+
+output:
+  dir: "output/iterative_learning"
+  resume: false
+  save_quality_report: true
+  quality_report_path: "output/iterative_learning/quality_report.json"
